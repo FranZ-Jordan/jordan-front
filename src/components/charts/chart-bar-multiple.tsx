@@ -1,71 +1,125 @@
 "use client"
 
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart"
-
-export const description = "A multiple bar chart"
-
-const chartData = [
-  { month: "January", desktop: 186, mobile: 80 },
-  { month: "February", desktop: 305, mobile: 200 },
-  { month: "March", desktop: 237, mobile: 120 },
-  { month: "April", desktop: 73, mobile: 190 },
-  { month: "May", desktop: 209, mobile: 130 },
-  { month: "June", desktop: 214, mobile: 140 },
-]
-
-const chartConfig = {
-  desktop: {
-    label: "Desktop",
-    color: "var(--chart-1)",
+const data = [
+  {
+    mes: 'Ene',
+    entregados: 4200,
+    rebotes: 420,
+    aperturas: 3100,
+    clics: 650
   },
-  mobile: {
-    label: "Mobile",
-    color: "var(--chart-2)",
+  {
+    mes: 'Feb',
+    entregados: 3800,
+    rebotes: 380,
+    aperturas: 2850,
+    clics: 580
   },
-} satisfies ChartConfig
+  {
+    mes: 'Mar',
+    entregados: 5100,
+    rebotes: 510,
+    aperturas: 3750,
+    clics: 780
+  },
+  {
+    mes: 'Abr',
+    entregados: 4600,
+    rebotes: 460,
+    aperturas: 3350,
+    clics: 690
+  },
+  {
+    mes: 'May',
+    entregados: 4400,
+    rebotes: 440,
+    aperturas: 3200,
+    clics: 680
+  },
+  {
+    mes: 'Jun',
+    entregados: 4800,
+    rebotes: 480,
+    aperturas: 3500,
+    clics: 720
+  }
+];
 
 export function ChartBarMultiple() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Bar Chart - Multiple</CardTitle>
-        {/* <CardDescription>January - June 2024</CardDescription> */}
+        <CardTitle>Evolución Mensual de Métricas</CardTitle>
+        <CardDescription>
+          Comparación de entregados, rebotes, aperturas y clics por mes
+        </CardDescription>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig}>
-          <BarChart accessibilityLayer data={chartData}>
-            <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="month"
-              tickLine={false}
-              tickMargin={10}
-              axisLine={false}
-              tickFormatter={(value) => value.slice(0, 3)}
+        <ResponsiveContainer width="100%" height={400}>
+          <BarChart
+            data={data}
+            margin={{
+              top: 20,
+              right: 30,
+              left: 20,
+              bottom: 5,
+            }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="mes" />
+            <YAxis />
+            <Tooltip 
+              formatter={(value, name) => {
+                const labels: { [key: string]: string } = {
+                  entregados: 'Entregados',
+                  rebotes: 'Rebotes',
+                  aperturas: 'Aperturas',
+                  clics: 'Clics'
+                };
+                return [value, labels[name as string] || name];
+              }}
             />
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent indicator="dashed" />}
+            <Legend 
+              formatter={(value) => {
+                const labels: { [key: string]: string } = {
+                  entregados: 'Entregados',
+                  rebotes: 'Rebotes',
+                  aperturas: 'Aperturas',
+                  clics: 'Clics'
+                };
+                return labels[value] || value;
+              }}
             />
-            <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
-            <Bar dataKey="mobile" fill="var(--color-mobile)" radius={4} />
+            <Bar 
+              dataKey="entregados" 
+              fill="#10b981" 
+              name="entregados"
+              radius={[2, 2, 0, 0]}
+            />
+            <Bar 
+              dataKey="rebotes" 
+              fill="#ef4444" 
+              name="rebotes"
+              radius={[2, 2, 0, 0]}
+            />
+            <Bar 
+              dataKey="aperturas" 
+              fill="#3b82f6" 
+              name="aperturas"
+              radius={[2, 2, 0, 0]}
+            />
+            <Bar 
+              dataKey="clics" 
+              fill="#8b5cf6" 
+              name="clics"
+              radius={[2, 2, 0, 0]}
+            />
           </BarChart>
-        </ChartContainer>
+        </ResponsiveContainer>
       </CardContent>
     </Card>
-  )
+  );
 }

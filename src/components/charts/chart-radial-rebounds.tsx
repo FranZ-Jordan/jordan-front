@@ -1,101 +1,68 @@
 "use client"
 
-import { Label, PolarRadiusAxis, RadialBar, RadialBarChart } from "recharts"
+import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart"
+const data = [
+  { name: 'Rebote Duro', value: 350 },
+  { name: 'Rebote Suave', value: 250 }
+];
 
-export const description = "A radial chart with stacked sections"
-
-const chartData = [{ month: "january", Duros: 260, Suaves: 570 }]
-
-const chartConfig = {
-  Duros: {
-    label: "Duros",
-    color: "#eb363e",
-  },
-  Suaves: {
-    label: "Suaves",
-    color: "#ff5743",
-  },
-} satisfies ChartConfig
+const COLORS = ['#ef4444', '#f97316'];
 
 export function ChartRadialRebounds() {
-  const totalVisitors = chartData[0].Duros + chartData[0].Suaves
+  const total = data.reduce((sum, item) => sum + item.value, 0);
+  const reboteDuro = data.find(item => item.name === 'Rebote Duro');
+  const porcentajeReboteDuro = ((reboteDuro?.value || 0) / total * 100).toFixed(1);
 
   return (
-    <Card className="flex flex-col">
-      <CardHeader className="items-center pb-0">
-        <CardTitle>Detalle de Rebotes</CardTitle>
+    <Card>
+      <CardHeader className="pb-2">
+        <CardTitle className="text-base">Rebotes</CardTitle>
       </CardHeader>
-      <CardContent className="flex flex-1 items-center pb-0">
-        <ChartContainer
-          config={chartConfig}
-          className="mx-auto aspect-square w-full max-w-[250px]"
-        >
-          <RadialBarChart
-            data={chartData}
-            endAngle={180}
-            innerRadius={80}
-            outerRadius={130}
-          >
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent hideLabel />}
-            />
-            <PolarRadiusAxis tick={false} tickLine={false} axisLine={false}>
-              <Label
-                content={({ viewBox }) => {
-                  if (viewBox && "cx" in viewBox && "cy" in viewBox) {
-                    return (
-                      <text x={viewBox.cx} y={viewBox.cy} textAnchor="middle">
-                        <tspan
-                          x={viewBox.cx}
-                          y={(viewBox.cy || 0) - 16}
-                          className="fill-foreground text-2xl font-bold"
-                        >
-                          {totalVisitors.toLocaleString()}
-                        </tspan>
-                        <tspan
-                          x={viewBox.cx}
-                          y={(viewBox.cy || 0) + 4}
-                          className="fill-muted-foreground"
-                        >
-                          Rebotes
-                        </tspan>
-                      </text>
-                    )
-                  }
-                }}
-              />
-            </PolarRadiusAxis>
-            <RadialBar
-              dataKey="Duros"
-              stackId="a"
-              cornerRadius={5}
-              fill="var(--color-Duros)"
-              className="stroke-transparent stroke-2"
-            />
-            <RadialBar
-              dataKey="Suaves"
-              fill="var(--color-Suaves)"
-              stackId="a"
-              cornerRadius={5}
-              className="stroke-transparent stroke-2"
-            />
-          </RadialBarChart>
-        </ChartContainer>
+      <CardContent>
+        <div className="relative">
+          <ResponsiveContainer width="100%" height={200}>
+            <PieChart>
+              <Pie
+                data={data}
+                cx="50%"
+                cy="50%"
+                innerRadius={50}
+                outerRadius={80}
+                startAngle={90}
+                endAngle={-270}
+                paddingAngle={2}
+                dataKey="value"
+              >
+                {data.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index]} />
+                ))}
+              </Pie>
+            </PieChart>
+          </ResponsiveContainer>
+          <div className="absolute inset-0 flex flex-col items-center justify-center">
+            <div className="text-2xl font-bold text-red-600">
+              {total.toLocaleString()}
+            </div>
+            <div className="text-sm text-gray-500">Total Rebotes</div>
+          </div>
+        </div>
+        <div className="mt-4 space-y-2">
+          {data.map((item, index) => (
+            <div key={item.name} className="flex justify-between items-center text-sm">
+              <div className="flex items-center gap-2">
+                <div 
+                  className="w-3 h-3 rounded-full" 
+                  style={{ backgroundColor: COLORS[index] }}
+                />
+                <span>{item.name}</span>
+              </div>
+              <span className="font-medium">{item.value.toLocaleString()}</span>
+            </div>
+          ))}
+        </div>
       </CardContent>
     </Card>
-  )
+  );
 }

@@ -1,101 +1,67 @@
 "use client"
 
-import { Label, PolarRadiusAxis, RadialBar, RadialBarChart } from "recharts"
+import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart"
+const data = [
+  { name: 'Aperturados', value: 3200, percentage: 72.7 },
+  { name: 'No Aperturados', value: 1200, percentage: 27.3 }
+];
 
-export const description = "A radial chart with stacked sections"
-
-const chartData = [{ month: "january", Aperturados: 2260, mobile: 570 }]
-
-const chartConfig = {
-  desktop: {
-    label: "Aperturados",
-    color: "#1b9e14",
-  },
-  mobile: {
-    label: "Mobile",
-    color: "#bef14b",
-  },
-} satisfies ChartConfig
+const COLORS = ['#10b981', '#94a3b8'];
 
 export function ChartRadialDelivered() {
-  const totalVisitors = chartData[0].Aperturados + chartData[0].mobile
+  const total = data.reduce((sum, item) => sum + item.value, 0);
+  const aperturados = data.find(item => item.name === 'Aperturados');
 
   return (
-    <Card className="flex flex-col">
-      <CardHeader className="items-center pb-0">
-        <CardTitle>Estado de Entregados</CardTitle>
+    <Card>
+      <CardHeader className="pb-2">
+        <CardTitle className="text-base">Detalle de Entregados</CardTitle>
       </CardHeader>
-      <CardContent className="flex flex-1 items-center pb-0">
-        <ChartContainer
-          config={chartConfig}
-          className="mx-auto aspect-square w-full max-w-[250px]"
-        >
-          <RadialBarChart
-            data={chartData}
-            endAngle={180}
-            innerRadius={80}
-            outerRadius={130}
-          >
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent hideLabel />}
-            />
-            <PolarRadiusAxis tick={false} tickLine={false} axisLine={false}>
-              <Label
-                content={({ viewBox }) => {
-                  if (viewBox && "cx" in viewBox && "cy" in viewBox) {
-                    return (
-                      <text x={viewBox.cx} y={viewBox.cy} textAnchor="middle">
-                        <tspan
-                          x={viewBox.cx}
-                          y={(viewBox.cy || 0) - 16}
-                          className="fill-foreground text-2xl font-bold"
-                        >
-                          {totalVisitors.toLocaleString()}
-                        </tspan>
-                        <tspan
-                          x={viewBox.cx}
-                          y={(viewBox.cy || 0) + 4}
-                          className="fill-muted-foreground"
-                        >
-                          Envíos
-                        </tspan>
-                      </text>
-                    )
-                  }
-                }}
-              />
-            </PolarRadiusAxis>
-            <RadialBar
-              dataKey="Aperturados"
-              stackId="a"
-              cornerRadius={5}
-              fill="var(--color-desktop)"
-              className="stroke-transparent stroke-2"
-            />
-            <RadialBar
-              dataKey="mobile"
-              fill="var(--color-mobile)"
-              stackId="a"
-              cornerRadius={5}
-              className="stroke-transparent stroke-2"
-            />
-          </RadialBarChart>
-        </ChartContainer>
+      <CardContent>
+        <div className="relative">
+          <ResponsiveContainer width="100%" height={200}>
+            <PieChart>
+              <Pie
+                data={data}
+                cx="50%"
+                cy="50%"
+                innerRadius={50}
+                outerRadius={80}
+                startAngle={90}
+                endAngle={-270}
+                paddingAngle={2}
+                dataKey="value"
+              >
+                {data.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index]} />
+                ))}
+              </Pie>
+            </PieChart>
+          </ResponsiveContainer>
+          <div className="absolute inset-0 flex flex-col items-center justify-center">
+            <div className="text-2xl font-bold text-green-600">
+              {aperturados?.percentage}%
+            </div>
+            <div className="text-sm text-gray-500">Aperturados</div>
+          </div>
+        </div>
+        <div className="mt-4 space-y-2">
+          {data.map((item, index) => (
+            <div key={item.name} className="flex justify-between items-center text-sm">
+              <div className="flex items-center gap-2">
+                <div 
+                  className="w-3 h-3 rounded-full" 
+                  style={{ backgroundColor: COLORS[index] }}
+                />
+                <span>{item.name}</span>
+              </div>
+              <span className="font-medium">{item.value.toLocaleString()}</span>
+            </div>
+          ))}
+        </div>
       </CardContent>
     </Card>
-  )
+  );
 }
