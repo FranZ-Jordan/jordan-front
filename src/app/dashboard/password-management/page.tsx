@@ -25,7 +25,7 @@ export default function ChangePasswordForm() {
 
     <>
     <BreadcrumbNav />
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
+    <div className="min-x-auto flex items-center justify-center bg-gray-100 p-4">
       <Card className="w-full max-w-md shadow-xl rounded-2xl p-6">
         <CardContent className="space-y-6">
           <h2 className="text-2xl font-semibold text-center">Cambiar Clave</h2>

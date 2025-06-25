@@ -72,9 +72,6 @@ export function ChartPercentageMetrics() {
                 value={metric.value} 
                 className="h-2"
               />
-              <p className="text-xs text-muted-foreground mt-2">
-                vs mes anterior
-              </p>
             </CardContent>
           </Card>
         );

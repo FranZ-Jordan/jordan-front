@@ -7,8 +7,8 @@ export default function SendEmail() {
   return (
     <>
       <BreadcrumbNav />
-        <div className="min-h-screen flex items-center justify-center px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="w-full max-w-6xl mx-auto p-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             
             <Card className="w-full h-full flex flex-col justify-between">
               <CardHeader>
@@ -21,13 +21,13 @@ export default function SendEmail() {
                 <LucideSendToBack className="w-12 h-12 text-green-500" />
               </CardContent>
               <CardFooter>
-                <Button type="submit" className="w-full">
+                <Button type="submit" className="w-full" variant="outline">
                   Enviar Campaña
                 </Button>
               </CardFooter>
             </Card>
 
-            <Card className="w-full h-80 flex flex-col justify-between">
+            <Card className="w-full h-full flex flex-col justify-between">
               <CardHeader>
                 <CardTitle>Realizar un envío</CardTitle>
               </CardHeader>

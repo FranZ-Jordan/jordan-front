@@ -20,57 +20,34 @@ const summaryData = [
     change: "+3",
     changeType: "increase" as const,
     icon: Mail,
-    description: "Campañas activas este mes"
+    description: "Campañas enviadas este mes"
   },
   {
-    title: "Suscriptores Activos",
+    title: "Total de Desuscripciones",
     value: "12,847",
     change: "+1,204",
-    changeType: "increase" as const,
+    changeType: "decrese" as const,
     icon: Users,
-    description: "Crecimiento del 10.3%"
+    description: "Tasa de desuscripciones del 10.3%"
   },
   {
-    title: "Mejor Rendimiento",
+    title: "Tasa de Entrega",
     value: "94.2%",
     change: "+5.1%",
     changeType: "increase" as const,
     icon: Target,
-    description: "Tasa entrega campaña premium"
+    description: "Tasa entrega campaña"
   },
   {
     title: "Promedio de Aperturas",
     value: "68.5%",
-    change: "-2.3%",
-    changeType: "decrease" as const,
+    change: "2.3%",
+    changeType: "increase" as const,
     icon: TrendingUp,
     description: "Últimos 30 días"
   }
 ];
 
-const statusData = [
-  {
-    status: "Exitosos",
-    count: 18,
-    color: "bg-green-500",
-    textColor: "text-green-700",
-    bgColor: "bg-green-50"
-  },
-  {
-    status: "En Proceso",
-    count: 4,
-    color: "bg-blue-500",
-    textColor: "text-blue-700",
-    bgColor: "bg-blue-50"
-  },
-  {
-    status: "Con Errores",
-    count: 2,
-    color: "bg-red-500",
-    textColor: "text-red-700",
-    bgColor: "bg-red-50"
-  }
-];
 
 export function SectionCards() {
   return (
@@ -107,32 +84,10 @@ export function SectionCards() {
         </div>
       </div>
 
-      {/* Estado de Campañas */}
-      <div>
-        <h3 className="text-lg font-semibold mb-4">Estado de Campañas</h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {statusData.map((item) => (
-            <Card key={item.status}>
-              <CardContent className="p-6">
-                <div className="flex items-center space-x-4">
-                  <div className={`w-12 h-12 rounded-full ${item.bgColor} flex items-center justify-center`}>
-                    <div className={`w-6 h-6 rounded-full ${item.color}`} />
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-muted-foreground">{item.status}</p>
-                    <p className={`text-2xl font-bold ${item.textColor}`}>{item.count}</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </div>
-
       {/* Métricas Detalladas */}
       <div>
         <h3 className="text-lg font-semibold mb-4">Métricas Detalladas</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <Card>
             <CardHeader>
               <CardTitle className="text-sm font-medium flex items-center gap-2">
@@ -164,6 +119,21 @@ export function SectionCards() {
           </Card>
 
           <Card>
+            <CardHeader>
+              <CardTitle className="text-sm font-medium flex items-center gap-2">
+                <Clock className="h-4 w-4 text-blue-500" />
+                En Procesamiento
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold text-blue-600">1,200</div>
+              <p className="text-xs text-muted-foreground mt-1">
+                Pendientes de entrega
+              </p>
+            </CardContent>
+          </Card>
+
+                    <Card>
             <CardHeader>
               <CardTitle className="text-sm font-medium flex items-center gap-2">
                 <Clock className="h-4 w-4 text-blue-500" />
