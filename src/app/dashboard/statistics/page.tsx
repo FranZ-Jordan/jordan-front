@@ -29,10 +29,10 @@ export default function Statistics() {
           <ChartRadialTotal />
         </div>
 
-        {/* Gráfico de barras múltiples */}
+        {/* Gráfico de barras múltiples
         <div className="grid grid-cols-1 gap-4">
           <ChartBarMultiple />
-        </div>
+        </div> */}
 
         {/* Tarjetas de resumen */}
         <div>

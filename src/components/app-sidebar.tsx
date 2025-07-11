@@ -4,7 +4,9 @@ import * as React from "react"
 
 import {
   LucideBrush,
+  LucideCardSim,
   LucideChartNoAxesCombined,
+  LucideClipboardCheck,
   LucideCombine,
   LucideDatabase,
   LucideFolderDown,
@@ -44,7 +46,26 @@ const data = {
   ],
   navMain: [
     {
-      title: "Audiencias",
+      title: "Envíos",
+      url: "#",
+      icon: LucideSend,
+      items: [
+        {
+          title: "Envíos Masivos",
+          url: "/dashboard/send-email",
+        },
+        {
+          title: "Gestión de Campañas",
+          url: "#",
+        },
+         {
+          title: "A/B Testing",
+          url: "#",
+        },
+      ],
+    },
+    {
+      title: "Gestión de Datos",
       url: "#",
       icon: LucideDatabase,
       isActive: true,
@@ -62,8 +83,12 @@ const data = {
           url: "#",
         },
         {
-          title: "Gestión de Listas",
+          title: "Listas",
           url: "#",
+        },
+                {
+          title: "Blacklist",
+          url: "/dashboard/blacklist",
         },
       ],
     },
@@ -99,47 +124,12 @@ const data = {
       ],
     },
     {
-      title: "Envíos",
-      url: "#",
-      icon: LucideSend,
-      items: [
-        {
-          title: "Email",
-          url: "/dashboard/send-email",
-        },
-        {
-          title: "SMS",
-          url: "#",
-        },
-        {
-          title: "VMS",
-          url: "#",
-        },
-        {
-          title: "WhatsApp",
-          url: "#",
-        },
-         {
-          title: "Gestión de Campañas",
-          url: "#",
-        },
-         {
-          title: "A/B Testing",
-          url: "#",
-        },
-      ],
-    },
-    {
       title: "Procesos",
       url: "#",
       icon: LucideCombine,
       items: [
         {
           title: "Solicitudes de Aprobación",
-          url: "#",
-        },
-        {
-          title: "Encuestas",
           url: "#",
         },
         {
@@ -150,6 +140,17 @@ const data = {
           title: "Tráfico de Entradas y Salidas",
           url: "#",
         },
+      ],
+    },
+    {
+      title: "Encuestas",
+      url: "#",
+      icon: LucideClipboardCheck,
+      items: [
+        {
+          title: "Gestión de Encuestas",
+          url: "#",
+        }
       ],
     },
         {
@@ -169,14 +170,6 @@ const data = {
           title: "Búsqueda por Registros",
           url: "/dashboard/search-by-records",
         },
-        // {
-        //   title: "Resultados de Orquestación",
-        //   url: "#",
-        // },
-        // {
-        //   title: "Resultados A/B Testing",
-        //   url: "#",
-        // },
         {
           title: "Descargas",
           url: "#",
